@@ -39,8 +39,8 @@ if response.status_code == 200:
         li_elements = ul_element[0].find_all('li', recursive=False)
         
         # Loop through each <li> element
-        # for i in range(1, len(li_elements)):
-        for i in range(17, len(li_elements)):
+        for i in range(1, len(li_elements)):
+        # for i in range(17, len(li_elements)):
             try:
                 brand_element = li_elements[i].find('a', recursive=False)
                 brand_name = brand_element.text.strip()
