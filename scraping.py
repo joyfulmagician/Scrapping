@@ -39,15 +39,15 @@ if response.status_code == 200:
     if ul_element:
         # Find all direct <li> children of the <ul>
         li_elements = ul_element[0].find_all('li', recursive=False)
+        m = 0
         
         # Loop through each <li> element
         for i in range(1, len(li_elements)):
-        # for i in range(3, 4):
+        # for i in range(39, len(li_elements)):
             try:
                 brand_element = li_elements[i].find('a', recursive=False)
                 brand_name = brand_element.text.strip()
                 div_element = li_elements[i].find('div', {"class": "col-1 firstcolumn lastcolumn"})
-                m =0
                 
                 if div_element:
                     a_elements = div_element.select('ul > li > a')
@@ -136,7 +136,7 @@ if response.status_code == 200:
                                             image_filename if image_filename is not None else "NULL"
                                         ])
                                     m += 1
-                                    print(f"Saved: {m}: {brand_name}")
+                                    print(f"The total products number is {m}")
                                 else:
                                     print(f"Product name div not found for URL: {product_url}. Skipping this product.")
                     else:
