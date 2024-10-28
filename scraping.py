@@ -43,7 +43,7 @@ if response.status_code == 200:
         
         # Loop through each <li> element
         for i in range(1, len(li_elements)):
-        # for i in range(39, len(li_elements)):
+        # for i in range(36, 38):
             try:
                 brand_element = li_elements[i].find('a', recursive=False)
                 brand_name = brand_element.text.strip()
@@ -127,14 +127,26 @@ if response.status_code == 200:
                                     # Save product data to CSV
                                     with open(csv_filename, mode='a', newline='') as file:
                                         writer = csv.writer(file)
-                                        writer.writerow([
-                                            brand_name,
-                                            club_type_name,
-                                            product_name,
-                                            price_value,
-                                            options_list if options_list is not None else "NULL",
-                                            image_filename if image_filename is not None else "NULL"
-                                        ])
+                                        
+                                        # Check if `i` is 36 or 37, reorder fields if true
+                                        if i in [36, 37]:
+                                            writer.writerow([
+                                                club_type_name,   # club_type_name comes first
+                                                brand_name,       # brand_name comes second
+                                                product_name,     # then product_name
+                                                price_value,      # then price
+                                                options_list if options_list is not None else "NULL",
+                                                image_filename if image_filename is not None else "NULL"
+                                            ])
+                                        else:
+                                            writer.writerow([
+                                                brand_name,       # brand_name comes first
+                                                club_type_name,   # then club_type_name
+                                                product_name,     # then product_name
+                                                price_value,      # then price
+                                                options_list if options_list is not None else "NULL",
+                                                image_filename if image_filename is not None else "NULL"
+                                            ])
                                     m += 1
                                     print(f"The total number of products is {m}.")
                                 else:
