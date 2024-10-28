@@ -136,7 +136,7 @@ if response.status_code == 200:
                                             image_filename if image_filename is not None else "NULL"
                                         ])
                                     m += 1
-                                    print(f"The total products number is {m}")
+                                    print(f"The total number of products is {m}.")
                                 else:
                                     print(f"Product name div not found for URL: {product_url}. Skipping this product.")
                     else:
