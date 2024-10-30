@@ -43,7 +43,7 @@ if response.status_code == 200:
         
         # Loop through each <li> element
         for i in range(1, len(li_elements)):
-        # for i in range(36, 38):
+        # for i in range(28, 29):
             try:
                 brand_element = li_elements[i].find('a', recursive=False)
                 brand_name = brand_element.text.strip()
@@ -113,13 +113,17 @@ if response.status_code == 200:
                                     
                                     image_filename = ""
                                     if product_image_url:
-                                        image_response = requests.get(product_image_url, stream=True)
-                                        if image_response.status_code == 200:
-                                            safe_product_name = re.sub(r'[<>:"/\\|?*]', '_', product_name)
-                                            image_filename = os.path.join(image_folder, f"{safe_product_name}.jpg").replace('\\', '/')
-                                            with open(image_filename, 'wb') as image_file:
-                                                for chunk in image_response.iter_content(1024):
-                                                    image_file.write(chunk)
+                                        # Check if the image URL contains any unwanted terms
+                                        if any(keyword in product_image_url for keyword in ["NEW_WEBSITE_LOGO", "Capture", "a1"]):
+                                            image_filename = "logo_image/logo.png"
+                                        else:
+                                            image_response = requests.get(product_image_url, stream=True)
+                                            if image_response.status_code == 200:
+                                                safe_product_name = re.sub(r'[<>:"/\\|?*]', '_', product_name)
+                                                image_filename = os.path.join(image_folder, f"{safe_product_name}.jpg").replace('\\', '/')
+                                                with open(image_filename, 'wb') as image_file:
+                                                    for chunk in image_response.iter_content(1024):
+                                                        image_file.write(chunk)
                                     else:
                                         # If the image URL is empty or not found, set image_filename to None or empty
                                         image_filename = None
